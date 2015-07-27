@@ -1,0 +1,10 @@
+spring:
+   jpa:
+      hibernate:
+         ddl-auto: update
+
+   datasource:
+      url: jdbc:mysql://${DB_SERVER:docker:8306}/training?autoReconnect=true
+      username: ${DB_USER:training}
+      password: ${DB_PASSWORD:dodol123}
+
