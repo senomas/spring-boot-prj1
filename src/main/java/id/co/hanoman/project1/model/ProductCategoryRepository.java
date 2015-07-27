@@ -8,6 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProductCategoryRepository extends CrudRepository<ProductCategory, Long> {
 
+	ProductCategory findByName(String name);
+
 	List<ProductCategory> findAll();
 	
 	Page<ProductCategory> findAll(Pageable pageable);

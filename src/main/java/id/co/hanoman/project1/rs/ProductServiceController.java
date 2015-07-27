@@ -1,6 +1,8 @@
 package id.co.hanoman.project1.rs;
 
 import id.co.hanoman.project1.model.Product;
+import id.co.hanoman.project1.model.ProductCategory;
+import id.co.hanoman.project1.model.ProductCategoryRepository;
 import id.co.hanoman.project1.model.ProductRepository;
 
 import java.util.List;
@@ -24,6 +26,9 @@ public class ProductServiceController {
 
 	@Autowired
 	ProductRepository repository;
+
+	@Autowired
+	ProductCategoryRepository productCategoryRepository;
 
 	@RequestMapping(value="/id/{id}", method={RequestMethod.GET})
 	@Transactional
@@ -49,6 +54,16 @@ public class ProductServiceController {
 	@Transactional
 	public Product save(@RequestBody Product obj) {
         if (obj.getName().indexOf("xxx") >= 0) throw new RuntimeException("Invalid name");
+        if (obj.getCategory() != null) {
+        	ProductCategory category;
+        	if (obj.getCategory().getId() != null) {
+        		category = productCategoryRepository.findOne(obj.getCategory().getId());
+        	} else {
+        		category = productCategoryRepository.findByName(obj.getCategory().getName());
+        	}
+        	if (category == null) throw new ResourceNotFoundException("Invalid category "+obj.getCategory());
+        	obj.setCategory(category);
+        }
 		return repository.save(obj);
 	}
 
