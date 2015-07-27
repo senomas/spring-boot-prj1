@@ -2,15 +2,11 @@ package id.co.hanoman.project1.model;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
 
 	List<Product> findAll();
-
-	Page<Product> findAll(Pageable pageable);
 
 }

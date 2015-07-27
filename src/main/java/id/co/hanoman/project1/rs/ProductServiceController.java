@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.senomas.common.rs.PageParam;
+import com.senomas.common.rs.ResourceNotFoundException;
+
 @RestController
 @RequestMapping("/rs/product")
 public class ProductServiceController {

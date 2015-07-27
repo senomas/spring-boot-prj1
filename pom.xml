@@ -65,6 +65,12 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.senomas</groupId>
+			<artifactId>senomas-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -135,6 +141,14 @@
 			<id>google</id>
 			<name>Google</name>
 			<url>http://google-maven-repository.googlecode.com/svn/repository/</url>
+		</repository>
+		<repository>
+			<id>senomas.github</id>
+			<url>https://raw.githubusercontent.com/senomas/mvn-repo/master/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 	</repositories>
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -27,6 +28,9 @@ import com.google.common.base.Predicates;
 
 @SpringBootApplication
 @EnableSwagger2
+@ComponentScan({
+    "id.co.hanoman", "com.senomas.common.loggerfilter"
+})
 public class Application {
 
     @Autowired

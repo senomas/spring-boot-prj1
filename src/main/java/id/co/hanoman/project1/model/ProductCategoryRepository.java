@@ -6,11 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-
 public interface ProductCategoryRepository extends CrudRepository<ProductCategory, Long> {
 
 	List<ProductCategory> findAll();
-
+	
 	Page<ProductCategory> findAll(Pageable pageable);
+
+	Page<ProductCategory> findByNameLike(String name, Pageable pageable);
 
 }

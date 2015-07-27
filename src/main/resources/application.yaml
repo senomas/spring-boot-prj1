@@ -8,3 +8,19 @@ spring:
       username: ${DB_USER:training}
       password: ${DB_PASSWORD:dodol123}
 
+com.senomas:
+   http-logger:
+      order: 0
+      path:
+         "/": ALL
+         "/v2/api-docs": OFF
+         "/swagger-": OFF
+         "/configuration/": OFF
+         "/rs/": ALL
+
+logging:
+   level:
+      '*': DEBUG
+      org.hibernate.SQL: DEBUG
+      com.senomas: DEBUG
+
