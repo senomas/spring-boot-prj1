@@ -1,5 +1,8 @@
 <html>
+<head>
+<title>Training App</title>
+</head>
 <body>
-Hello World!
+<div id="app"></div>
 </body>
 </html>
