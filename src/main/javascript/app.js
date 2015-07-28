@@ -1,29 +1,35 @@
+require('jquery');
+require('bootstrap');
+require('../../../node_modules/bootstrap/dist/css/bootstrap.css');
+require("../css/app.css");
+
 import React from 'react';  
 import Router from 'react-router';  
 import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 
+import AppHeader from './components/appHeader.js';
+import Dashboard from './components/dashboard.js';
 import ProductCategory from './components/admin/productCategory.js';
 
-let App = React.createClass({  
+export default class App extends React.Component {
   render() {
     return (
-      <div className="nav">
-        <Link to="app">Home</Link>
-        <Link to="adminProductCategory">Product Category</Link>
+      <div className="app-container container">
+		<AppHeader/>
 
-        {/* this is the importTant part */}
         <RouteHandler/>
       </div>
     );
   }
-});
+};
 
 let routes = (  
   <Route name="app" path="/" handler={App}>
     <Route name="adminProductCategory" path="/admin/productCategory" handler={ProductCategory}/>
+	<Route path="/*" handler={Dashboard}/>
   </Route>
 );
 
 Router.run(routes, function (Handler) {  
-  React.render(<Handler/>, document.body);
+  React.render(<Handler/>, document.getElementById('app'));
 });

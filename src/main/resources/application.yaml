@@ -12,7 +12,7 @@ com.senomas:
    http-logger:
       order: 0
       path:
-         "/": ALL
+         "/": BASIC
          "/v2/api-docs": OFF
          "/swagger-": OFF
          "/configuration/": OFF
