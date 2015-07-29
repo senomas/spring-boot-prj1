@@ -10,6 +10,7 @@ import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 import AppHeader from './components/appHeader.js';
 import Dashboard from './components/dashboard.js';
 import ProductCategory from './components/admin/productCategory.js';
+import ProductCategoryEdit from './components/admin/productCategoryEdit.js';
 
 export default class App extends React.Component {
   render() {
@@ -25,7 +26,9 @@ export default class App extends React.Component {
 
 let routes = (  
   <Route name="app" path="/" handler={App}>
-    <Route name="adminProductCategory" path="/admin/productCategory" handler={ProductCategory}/>
+    <Route name="adminProductCategory" path="/admin/productCategory" handler={ProductCategory}>
+    	<Route name="adminProductCategoryEdit" path="id/:id" handler={ProductCategoryEdit}/>
+    </Route>
 	<Route path="/*" handler={Dashboard}/>
   </Route>
 );

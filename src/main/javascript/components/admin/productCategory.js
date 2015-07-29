@@ -17,6 +17,7 @@ export default class ProductCategory extends React.Component {
 		super(props);
 		this.state = store.getState();
 		
+		this.rowClick = this.rowClick.bind(this);
 		this.getRow = this.getRow.bind(this);
 		this.storeUpdate = this.storeUpdate.bind(this);
 	}
@@ -28,7 +29,7 @@ export default class ProductCategory extends React.Component {
 				<Table
 					rowHeight={50}
 					rowGetter={this.getRow}
-					rowsCount={this.state.totalElements}
+					rowsCount={this.state.list.totalElements}
 					onRowClick={this.rowClick}
 					width={938}
 					height={500}
@@ -49,20 +50,28 @@ export default class ProductCategory extends React.Component {
 						flexGrow={10}
 						dataKey="name" />
 				</Table>
+				
+				<RouteHandler/>
 			</Panel>
 		);
 	}
 	
+	rowClick(e) {
+		var row = $(e.target).closest('.fixedDataTableCellGroupLayout_cellGroupWrapper').find('.row_NUM').text();
+		console.log("SELECTED ROW "+row+"  "+JSON.stringify(this.getRow(row-1)));
+		window.location.assign('/#/admin/productCategory/id/'+this.getRow(row-1).id);
+	}
+	
 	getRow(row) {
-		let data = this.state.content[row];
+		let data = this.state.list.content[row];
 		data.row = row + 1;
 		return data;
 	}
 	
 	componentDidMount() {
 		store.listen(this.storeUpdate);
-		
-		action.fetch(0);
+		console.log('didMount');
+		action.getList(0);
 	}
 	
 	componentWillUnmount() {
