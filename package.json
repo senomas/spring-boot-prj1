@@ -37,6 +37,7 @@
     "jquery": "^2.1.4",
     "react": "^0.13.3",
     "react-bootstrap": "^0.24.2",
-    "react-router": "^0.13.3"
+    "react-router": "^0.13.3",
+    "react-select": "^0.5.6"
   }
 }

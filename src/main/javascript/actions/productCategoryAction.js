@@ -26,7 +26,7 @@ class ProductCategoryAction {
 	getList(page) {
 		this.actions.getListStart(page);
 		jQuery.ajax({
-			url: '/rs/productCategory/',
+			url: '/rs/productCategory',
 			type: 'POST',
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify({

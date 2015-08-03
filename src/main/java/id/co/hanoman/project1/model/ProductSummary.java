@@ -2,27 +2,22 @@ package id.co.hanoman.project1.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
-public class ProductCategory implements Serializable {
+public class ProductSummary implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	Long id;
 	
-	@Column(nullable = false, length=100)
+	String category;
+	
 	String name;
 	
-	public ProductCategory() {
+	public ProductSummary() {
 	}
-
-	public ProductCategory(String name) {
+	
+	public ProductSummary(Long id, String category, String name) {
+		super();
+		this.id = id;
+		this.category = category;
 		this.name = name;
 	}
 
@@ -32,6 +27,14 @@ public class ProductCategory implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getName() {
@@ -46,6 +49,8 @@ public class ProductCategory implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -59,7 +64,12 @@ public class ProductCategory implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProductCategory other = (ProductCategory) obj;
+		ProductSummary other = (ProductSummary) obj;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -75,6 +85,7 @@ public class ProductCategory implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ProductCategory [id=" + id + ", name=" + name + "]";
+		return "Product [id=" + id + ", category=" + category + ", name="
+				+ name + "]";
 	}
 }

@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Product implements Serializable {
@@ -23,9 +25,12 @@ public class Product implements Serializable {
 	ProductCategory category;
 	
 	@Column(nullable = false, length=100)
+	@Size(min=4, max=100)
+	@NotNull
 	String name;
 	
 	@Column(nullable = false, length=1000)
+	@javax.validation.constraints.Size(max=1000)
 	String description;
 
 	public Long getId() {

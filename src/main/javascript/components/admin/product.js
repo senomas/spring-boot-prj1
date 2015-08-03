@@ -4,32 +4,35 @@ require('../../../../../node_modules/fixed-data-table/dist/fixed-data-table.css'
 import React from 'react';
 import { RouteHandler } from 'react-router';
 
-import {Panel, Button} from 'react-bootstrap';
+import {Panel} from 'react-bootstrap';  
 import {Table, Column} from 'fixed-data-table';
 
-import action from '../../actions/ProductCategoryAction';
-import store from '../../stores/ProductCategoryStore';
+import ProductFilter from './ProductFilter';
+
+import action from '../../actions/ProductAction';
+import store from '../../stores/ProductStore';
 
 
-export default class ProductCategory extends React.Component {
+
+export default class Product extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = store.getState();
 		
 		this.rowClick = this.rowClick.bind(this);
-		this.getRow = this.getRow.bind(this);
 		this.storeUpdate = this.storeUpdate.bind(this);
 	}
 	
 	render() {
 		console.log('render');
 		return (
-			<Panel header='Product Category'>
+			<Panel header='Product'>
+				{this.state.ajaxCall > 0 ? <div className="loading"><img src='images/load.png'/></div> : ''}
 				<Table
 					rowHeight={50}
-					rowGetter={this.getRow}
-					rowsCount={this.state.list.totalElements}
+					rowGetter={this.state.list.getRow}
+					rowsCount={this.state.list.total}
 					onRowClick={this.rowClick}
 					width={938}
 					height={500}
@@ -49,11 +52,15 @@ export default class ProductCategory extends React.Component {
 						width={400}
 						flexGrow={10}
 						dataKey="name" />
+					
+					<Column
+						label="Category"
+						fixed={true}
+						width={400}
+						flexGrow={10}
+						dataKey="category" />
 				</Table>
-				<div className="cmd-bar text-center">
-					<Button onClick={this.createNew} bsStyle='primary'>Create New Item</Button>
-				</div>
-				
+				<ProductFilter/>
 				<RouteHandler/>
 			</Panel>
 		);
@@ -61,24 +68,18 @@ export default class ProductCategory extends React.Component {
 	
 	rowClick(e) {
 		var row = $(e.target).closest('.fixedDataTableCellGroupLayout_cellGroupWrapper').find('.row_NUM').text();
-		console.log("SELECTED ROW "+row+"  "+JSON.stringify(this.getRow(row-1)));
-		window.location.assign('/#/admin/productCategory/id/'+this.getRow(row-1).id);
-	}
-	
-	createNew() {
-		window.location.assign('/#/admin/productCategory/new');
-	}
-	
-	getRow(row) {
-		let data = this.state.list.content[row];
-		data.row = row + 1;
-		return data;
+//		console.log("SELECTED ROW "+row+"  "+JSON.stringify(this.getRow(row-1)));
+		window.location.assign('/#/admin/product/id/'+this.state.list.getRow(row-1).id);
 	}
 	
 	componentDidMount() {
+//		console.log('didMount');
 		store.listen(this.storeUpdate);
-		console.log('didMount');
-		action.getList(0);
+		action.getCategories();
+		action.getList({
+			page: 0,
+			filter: this.state.filter
+		});
 	}
 	
 	componentWillUnmount() {

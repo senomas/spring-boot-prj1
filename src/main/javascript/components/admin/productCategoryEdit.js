@@ -27,7 +27,7 @@ export default class ProductCategoryEdit extends React.Component {
 		return (
 			<Modal show={true} onHide={this.ignored}>
 				<Modal.Header>
-					<Modal.Title>Edit Product Category</Modal.Title>
+					<Modal.Title>{this.props.params.id ? 'Edit' : 'Create'} Product Category</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<form className='form-horizontal'>
@@ -36,9 +36,20 @@ export default class ProductCategoryEdit extends React.Component {
 					</form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={this.save} bsStyle='primary'>Save</Button>
-					<Button onClick={this.delete} bsStyle='danger'>Delete</Button>
-					<Button onClick={this.close}>Close</Button>
+					{
+						this.props.params.id ? (
+							<div>
+								<Button onClick={this.save} bsStyle='primary'>Save</Button>
+								<Button onClick={this.delete} bsStyle='danger'>Delete</Button>
+								<Button onClick={this.close}>Close</Button>
+							</div>
+						) : (
+							<div>
+								<Button onClick={this.save} bsStyle='primary'>Create</Button>
+								<Button onClick={this.close}>Close</Button>
+							</div>
+						)
+					}
 				</Modal.Footer>
 			</Modal>
 		);
