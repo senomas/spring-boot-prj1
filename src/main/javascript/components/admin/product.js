@@ -78,7 +78,8 @@ export default class Product extends React.Component {
 		action.getCategories();
 		action.getList({
 			page: 0,
-			filter: this.state.filter
+			filter: this.state.filter,
+			clear: true
 		});
 	}
 	

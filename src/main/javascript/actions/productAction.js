@@ -36,6 +36,9 @@ class ProductAction {
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify(param),
 		}).done(function (data) {
+			if (param.clear) {
+				this.actions.getListResolve({totalElements: 0});
+			}
 			this.actions.getListResolve(data);
 			if (!param.background) this.actions.ajaxDone();
 		}.bind(this)).fail(function (xhr, ajaxOptions, errorThrown) {
@@ -68,7 +71,7 @@ class ProductAction {
 	save(data) {
 		this.actions.ajaxStart();
 		jQuery.ajax({
-			url: '/rs/product/',
+			url: '/rs/product',
 			type: 'PUT',
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify({
