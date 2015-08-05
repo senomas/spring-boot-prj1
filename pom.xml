@@ -127,7 +127,7 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>--progress --colors</arguments>
+							<arguments>--progress</arguments>
 						</configuration>
 					</execution>
 				</executions>
