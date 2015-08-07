@@ -65,7 +65,7 @@ public class DataInitializer {
 			}
 		}
 
-		long productCount = 1457;
+		long productCount = 543;
 		long count = productRepo.count();
 		if (count < productCount) {
 			Random rnd = new Random();

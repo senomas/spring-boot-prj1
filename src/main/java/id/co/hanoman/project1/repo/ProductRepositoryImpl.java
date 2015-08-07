@@ -1,11 +1,5 @@
 package id.co.hanoman.project1.repo;
 
-import id.co.hanoman.project1.model.Product;
-import id.co.hanoman.project1.model.ProductCategory;
-import id.co.hanoman.project1.model.ProductSummary;
-import id.co.hanoman.project1.rs.ProductFilter;
-import id.co.hanoman.project1.rs.ProductPageParam;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,8 +10,14 @@ import javax.persistence.criteria.Selection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.senomas.common.persistence.AbstractCustomRepository;
-import com.senomas.common.persistence.FilterJoin;
+import com.senomas.common.persistence.Filter3;
 import com.senomas.common.persistence.PageRequestId;
+
+import id.co.hanoman.project1.model.Product;
+import id.co.hanoman.project1.model.ProductCategory;
+import id.co.hanoman.project1.model.ProductSummary;
+import id.co.hanoman.project1.rs.ProductFilter;
+import id.co.hanoman.project1.rs.ProductPageParam;
 
 public class ProductRepositoryImpl extends AbstractCustomRepository implements ProductRepositoryCustom {
 	
@@ -26,7 +26,7 @@ public class ProductRepositoryImpl extends AbstractCustomRepository implements P
 
 	@Override
 	public PageRequestId<ProductSummary> findSummaryFilter(final ProductPageParam param) {
-		return findJoinWithSpecification(param.getRequestId(), entityManager, param.getRequest(), new FilterJoin<ProductSummary, Product, ProductCategory>() {
+		return findWithSpecification(param.getRequestId(), entityManager, param.getRequest(), new Filter3<ProductSummary, Product, ProductCategory>() {
 			@Override
 			public Predicate toPredicate(Root<Product> product, Root<ProductCategory> category, CriteriaQuery<?> query, CriteriaBuilder builder) {
 				ProductFilter filter = param.getFilter();

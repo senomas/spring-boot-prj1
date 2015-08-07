@@ -18,9 +18,30 @@ com.senomas:
          "/configuration/": OFF
          "/rs/": ALL
 
+
 logging:
    level:
       '*': DEBUG
       org.hibernate.SQL: DEBUG
       com.senomas: DEBUG
+
+
+---
+spring:
+   profiles: dev-db
+   jpa:
+      hibernate:
+         ddl-auto: create-drop
+
+---
+spring:
+   profiles: dev-mem
+   jpa:
+      hibernate:
+         ddl-auto: create-drop
+
+   datasource:
+      url: jdbc:hsqldb:mem:training
+      username: sa
+      password: 
 
