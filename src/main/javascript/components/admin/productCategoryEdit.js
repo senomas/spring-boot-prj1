@@ -79,7 +79,11 @@ export default class ProductCategoryEdit extends React.Component {
 	
 	componentDidMount() {
 		store.listen(this.storeUpdate);
-		action.get(this.props.params.id);
+		if (this.props.params.id) {
+			action.get(this.props.params.id);
+		} else {
+			this.setState({item: {}});
+		}
 	}
 	
 	componentWillUnmount() {

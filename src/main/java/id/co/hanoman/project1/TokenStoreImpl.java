@@ -54,4 +54,15 @@ public class TokenStoreImpl implements TokenStore {
 		}
 	}
 
+	@Override
+	public void putSalt(String salt) {
+		// not implemented
+	}
+
+	@Override
+	public boolean hasSalt(String salt) {
+		// not implemented
+		return true;
+	}
+
 }
