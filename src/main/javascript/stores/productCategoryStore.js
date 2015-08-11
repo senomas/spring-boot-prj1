@@ -1,6 +1,7 @@
 import alt from '../lib/altInstance';
 
 import action from '../actions/ProductCategoryAction';
+import appAction from '../actions/AppAction';
 
 class ProductCategoryStore {
 
@@ -16,11 +17,20 @@ class ProductCategoryStore {
 			
 			saveStart: action.saveStart,
 			saveDone: action.saveDone,
-			saveFailed: action.saveFailed
+			saveFailed: action.saveFailed,
+			
+			deleteStart: action.deleteStart,
+			deleteDone: action.deleteDone,
+			deleteFailed: action.deleteFailed,
+			
+			loginDone: appAction.loginDone
 		});
 		
 		this.list = {totalElements: 0};
 		this.item = {};
+		
+		let uv = sessionStorage.getItem('login');
+		this.login = uv ? JSON.parse(uv) : {};
 	}
 	
 	getStart(page) {
@@ -64,6 +74,29 @@ class ProductCategoryStore {
 	
 	saveFailed(error) {
 		console.log('saveFailed '+JSON.stringify(error));
+	}
+	
+	deleteStart(data) {
+		console.log('deleteStart '+JSON.stringify(data));
+		this.setState({redirect: 'close'});
+	}
+
+	deleteDone(data) {
+		console.log('deleteDone '+JSON.stringify(data));
+		window.location.assign('/#/admin/productCategory');
+		this.preventDefault();
+	}
+	
+	deleteFailed(error) {
+		console.log('deleteFailed '+JSON.stringify(error));
+	}
+
+	loginDone(data) {
+		this.login = data;
+		console.log('PRODUCT CATEGORY LOGIN DONE '+JSON.stringify(data));
+		if (this.login && this.login.token) {
+			window.setTimeout(action.getList, 0, 0, this.login.token);
+		}
 	}
 }
 

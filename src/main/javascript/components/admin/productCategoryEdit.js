@@ -19,6 +19,7 @@ export default class ProductCategoryEdit extends React.Component {
 
 		this.updateName = this.updateName.bind(this);
 		this.save = this.save.bind(this);
+		this.delete = this.delete.bind(this);
 		this.storeUpdate = this.storeUpdate.bind(this);
 	}
 	
@@ -64,9 +65,12 @@ export default class ProductCategoryEdit extends React.Component {
 	ignored() {
 	}
 	
-	
 	save() {
 		action.save(this.state.item);
+	}
+	
+	delete() {
+		action.delete(this.state.item.id);
 	}
 	
 	close() {

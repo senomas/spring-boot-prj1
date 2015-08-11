@@ -77,7 +77,7 @@ export default class ProductCategory extends React.Component {
 	
 	componentDidMount() {
 		store.listen(this.storeUpdate);
-		console.log('didMount');
+		console.log('didMount '+JSON.stringify(this.state.login));
 		action.getList(0);
 	}
 	

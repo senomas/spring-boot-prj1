@@ -7,6 +7,7 @@ import React from 'react';
 import Router from 'react-router';  
 import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 
+import Login from './components/login';
 import AppHeader from './components/appHeader';
 import Dashboard from './components/dashboard';
 import ProductCategory from './components/admin/productCategory';
@@ -19,12 +20,12 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div className="app-container container">
+				<Login/>
 				<AppHeader/>
 				<RouteHandler/>
 			</div>
 		);
 	}
-
 }
 
 let routes = (  
