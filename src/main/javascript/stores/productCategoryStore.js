@@ -30,7 +30,7 @@ class ProductCategoryStore {
 		this.item = {};
 		
 		let uv = sessionStorage.getItem('login');
-		this.login = uv ? JSON.parse(uv) : {};
+		this.login = uv ? JSON.parse(uv) : null;
 	}
 	
 	getStart(page) {
@@ -95,7 +95,9 @@ class ProductCategoryStore {
 		this.login = data;
 		console.log('PRODUCT CATEGORY LOGIN DONE '+JSON.stringify(data));
 		if (this.login && this.login.token) {
-			window.setTimeout(action.getList, 0, 0, this.login.token);
+			console.log('window reload');
+			document.location.reload();
+			this.preventDefault();
 		}
 	}
 }

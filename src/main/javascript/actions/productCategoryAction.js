@@ -5,6 +5,7 @@ import appAction from './AppAction';
 class ProductCategoryAction {
 	
 	constructor() {
+		this.generateActions('goEdit');
 		this.generateActions('getStart', 'getResolve', 'getFailed');
 		this.generateActions('getListStart', 'getListResolve', 'getListFailed');
 		this.generateActions('saveStart', 'saveDone', 'saveFailed');

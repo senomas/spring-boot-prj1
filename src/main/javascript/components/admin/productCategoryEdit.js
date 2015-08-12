@@ -24,6 +24,7 @@ export default class ProductCategoryEdit extends React.Component {
 	}
 	
 	render() {
+		if (!this.state.login) return null;
 		var item = this.state.item;
 		return (
 			<Modal show={true} onHide={this.ignored}>

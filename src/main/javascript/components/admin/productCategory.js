@@ -23,7 +23,6 @@ export default class ProductCategory extends React.Component {
 	}
 	
 	render() {
-		console.log('render');
 		return (
 			<Panel header='Product Category'>
 				<Table
