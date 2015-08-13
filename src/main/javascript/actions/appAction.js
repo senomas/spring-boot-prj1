@@ -10,10 +10,6 @@ class AppAction {
 		this.generateActions('loginDone', 'loginFailed');
 	}
 
-	ajaxDoStart() {
-		window.setTimeout(this.actions.ajaxStart, 0);
-	}
-
 	logout() {
 		this.actions.loginDone(null);
 	}

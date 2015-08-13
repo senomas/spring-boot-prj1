@@ -13,7 +13,6 @@ import action from '../../actions/ProductAction';
 import store from '../../stores/ProductStore';
 
 
-
 export default class Product extends React.Component {
 
 	constructor(props) {
@@ -73,16 +72,12 @@ export default class Product extends React.Component {
 	componentDidMount() {
 //		console.log('didMount');
 		store.listen(this.storeUpdate);
-		action.getCategories();
-		action.getList({
-			page: 0,
-			filter: this.state.filter,
-			clear: true
-		});
+		action.activate();
 	}
 
 	componentWillUnmount() {
 		store.unlisten(this.storeUpdate);
+		action.deactivate();
 	}
 
 	storeUpdate(state) {

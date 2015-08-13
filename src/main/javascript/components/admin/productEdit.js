@@ -6,7 +6,7 @@ import React from 'react';
 import { RouteHandler } from 'react-router';
 import Select from 'react-select';
 
-import {Panel, Modal, Button, Input} from 'react-bootstrap';  
+import {Panel, Modal, Button, Input} from 'react-bootstrap';
 import {Table, Column} from 'fixed-data-table';
 
 import action from '../../actions/ProductAction';
@@ -25,13 +25,12 @@ export default class ProductEdit extends React.Component {
 		this.save = this.save.bind(this);
 		this.storeUpdate = this.storeUpdate.bind(this);
 	}
-	
+
 	render() {
 		var item = this.state.item;
-		if (item == null || !item.category) return null;
-		console.log('RENDER '+JSON.stringify(item));
+		if (!item) return null;
 		return (
-			<Modal show={true} onHide={this.ignored}>
+			<Modal show={!this.state.error} onHide={this.ignored}>
 				<Modal.Header>
 					<Modal.Title>Edit Product</Modal.Title>
 				</Modal.Header>
@@ -61,13 +60,13 @@ export default class ProductEdit extends React.Component {
 			</Modal>
 		);
 	}
-	
+
 	updateName(e) {
 		let item = this.state.item;
 		item.name = e.target.value;
 		this.setState({item: item});
 	}
-	
+
 	getCategories() {
 		let categories = [];
 		this.state.categories.map(function(v) {
@@ -76,7 +75,7 @@ export default class ProductEdit extends React.Component {
 		console.log('categories '+JSON.stringify(categories));
 		return categories;
 	}
-	
+
 	updateCategory(id, v) {
 		console.log('updateCategory('+id+', '+v+')');
 		let item = this.state.item;
@@ -92,34 +91,38 @@ export default class ProductEdit extends React.Component {
 		console.log('ITEM '+JSON.stringify(item));
 		this.setState({item: item});
 	}
-	
+
 	updateDescription(e) {
 		var item = this.state.item;
 		item.description = e.target.value;
 		this.setState({item: item});
 	}
-	
+
 	ignored() {
 	}
-	
-	
+
+
 	save() {
 		action.save(this.state.item);
 	}
-	
+
 	close() {
 		window.location.assign('/#/admin/product');
 	}
-	
+
 	componentDidMount() {
 		store.listen(this.storeUpdate);
-		action.get(this.props.params.id);
+		if (this.props.params.id) {
+			action.get(this.props.params.id);
+		} else {
+			action.getResolve({category: {}});
+		}
 	}
-	
+
 	componentWillUnmount() {
 		store.unlisten(this.storeUpdate);
 	}
-	
+
 	storeUpdate(state) {
 		this.setState(state);
 	}

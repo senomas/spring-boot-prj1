@@ -5,15 +5,16 @@ import appAction from './AppAction';
 class ProductCategoryAction {
 
 	constructor() {
-		this.generateActions('goEdit');
-		this.generateActions('getResolve', 'getFailed');
+		this.generateActions('activate', 'deactivate');
+		this.generateActions('getStart', 'getResolve', 'getFailed');
 		this.generateActions('getListResolve', 'getListFailed');
 		this.generateActions('saveDone', 'saveFailed');
 		this.generateActions('deleteDone', 'deleteFailed');
 	}
 
 	get(id) {
-		appAction.ajaxDoStart();
+		this.actions.getStart(id);
+		appAction.ajaxStart();
 		jQuery.ajax({
 			url: '/rs/productCategory/id/'+id,
 	    beforeSend: function (xhr) {
@@ -34,7 +35,7 @@ class ProductCategoryAction {
 	}
 
 	getList(param) {
-		if (!param.background) appAction.ajaxDoStart();
+		if (!param.background) appAction.ajaxStart();
 		jQuery.ajax({
 			url: '/rs/productCategory',
 			type: 'POST',
@@ -62,7 +63,7 @@ class ProductCategoryAction {
 	}
 
 	save(data) {
-		appAction.ajaxDoStart();
+		appAction.ajaxStart();
 		jQuery.ajax({
 			url: '/rs/productCategory/',
 			type: 'PUT',
@@ -91,7 +92,7 @@ class ProductCategoryAction {
 	}
 
 	delete(id) {
-		appAction.ajaxDoStart();
+		appAction.ajaxStart();
 		jQuery.ajax({
 			url: '/rs/productCategory/id/'+id,
 			type: 'DELETE',

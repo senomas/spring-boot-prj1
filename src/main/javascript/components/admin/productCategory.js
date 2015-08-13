@@ -73,15 +73,12 @@ export default class ProductCategory extends React.Component {
 
 	componentDidMount() {
 		store.listen(this.storeUpdate);
-		action.getList({
-			page: 0,
-			filter: this.state.filter,
-			clear: true
-		});
+		action.activate();
 	}
 
 	componentWillUnmount() {
 		store.unlisten(this.storeUpdate);
+		action.deactivate();
 	}
 
 	storeUpdate(state) {

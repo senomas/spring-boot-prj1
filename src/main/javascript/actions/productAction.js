@@ -5,7 +5,8 @@ import appAction from './AppAction';
 class ProductAction {
 
 	constructor() {
-		this.generateActions('getResolve', 'getFailed');
+		this.generateActions('activate', 'deactivate');
+		this.generateActions('getStart', 'getResolve', 'getFailed');
 		this.generateActions('getListResolve', 'getListFailed');
 		this.generateActions('getCategoriesResolve', 'getCategoriesFailed');
 		this.generateActions('saveDone', 'saveFailed');
@@ -13,64 +14,77 @@ class ProductAction {
 	}
 
 	get(id) {
-		appAction.ajaxDoStart();
+		this.actions.getStart(id);
+		appAction.ajaxStart();
 		jQuery.ajax({
 			url: '/rs/product/id/'+id,
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader('Authorization', 'Bearer '+sessionStorage.getItem('token'));
+		  }
 		}).done(function (data) {
 			this.actions.getResolve(data);
 			appAction.ajaxDone();
-		}.bind(this)).fail(function (xhr, ajaxOptions, errorThrown) {
-			if (xhr.responseJSON.message) {
-				this.actions.getFailed(xhr.responseJSON.message);
+		}.bind(this)).fail(function (xhr) {
+			if (xhr.responseJSON.status == 403 && xhr.responseJSON.message == "Access Denied" && xhr.responseJSON.exception == "org.springframework.security.authentication.ProviderNotFoundException") {
+				appAction.loginDone(null);
 			} else {
-				this.actions.getFailed(errorThrown);
+				this.actions.getFailed(xhr.responseJSON.message);
+				appAction.showError(xhr.responseJSON.message);
 			}
 			appAction.ajaxDone();
 		}.bind(this));
 	}
 
 	getList(param) {
-		if (!param.background) appAction.ajaxDoStart();
+		if (!param.background) appAction.ajaxStart();
 		jQuery.ajax({
 			url: '/rs/product',
 			type: 'POST',
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify(param),
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader('Authorization', 'Bearer '+sessionStorage.getItem('token'));
+		  }
 		}).done(function (data) {
 			if (param.clear) {
 				this.actions.getListResolve({totalElements: 0});
 			}
 			this.actions.getListResolve(data);
 			if (!param.background) appAction.ajaxDone();
-		}.bind(this)).fail(function (xhr, ajaxOptions, errorThrown) {
-			if (xhr.responseJSON.message) {
-				this.actions.getListFailed(xhr.responseJSON.message);
+		}.bind(this)).fail(function (xhr) {
+			if (xhr.responseJSON.status == 403 && xhr.responseJSON.message == "Access Denied" && xhr.responseJSON.exception == "org.springframework.security.authentication.ProviderNotFoundException") {
+				appAction.loginDone(null);
 			} else {
-				this.actions.getListFailed(errorThrown);
+				this.actions.getListFailed(xhr.responseJSON.message);
+				appAction.showError(xhr.responseJSON.message);
 			}
 			if (!param.background) appAction.ajaxDone();
 		}.bind(this));
 	}
 
 	getCategories() {
-		appAction.ajaxDoStart();
+		appAction.ajaxStart();
 		jQuery.ajax({
-			url: '/rs/productCategory'
+			url: '/rs/productCategory',
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader('Authorization', 'Bearer '+sessionStorage.getItem('token'));
+		  }
 		}).done(function (data) {
 			this.actions.getCategoriesResolve(data);
 			appAction.ajaxDone();
-		}.bind(this)).fail(function (xhr, ajaxOptions, errorThrown) {
-			if (xhr.responseJSON.message) {
-				this.actions.getCategoriesFailed(xhr.responseJSON.message);
+		}.bind(this)).fail(function (xhr) {
+			if (xhr.responseJSON.status == 403 && xhr.responseJSON.message == "Access Denied" && xhr.responseJSON.exception == "org.springframework.security.authentication.ProviderNotFoundException") {
+				appAction.loginDone(null);
 			} else {
-				this.actions.getCategoriesFailed(errorThrown);
+				this.actions.getCategoriesFailed(xhr.responseJSON.message);
+				appAction.showError(xhr.responseJSON.message);
 			}
 			appAction.ajaxDone();
 		}.bind(this));
 	}
 
 	save(data) {
-		appAction.ajaxDoStart();
+		appAction.ajaxStart();
 		jQuery.ajax({
 			url: '/rs/product',
 			type: 'PUT',
@@ -81,14 +95,18 @@ class ProductAction {
 				name: data.name,
 				description: data.description
 			}),
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader('Authorization', 'Bearer '+sessionStorage.getItem('token'));
+		  }
 		}).done(function (data) {
 			this.actions.saveDone(data);
 			appAction.ajaxDone();
-		}.bind(this)).fail(function (xhr, ajaxOptions, errorThrown) {
-			if (xhr.responseJSON.message) {
-				this.actions.saveFailed(xhr.responseJSON.message);
+		}.bind(this)).fail(function (xhr) {
+			if (xhr.responseJSON.status == 403 && xhr.responseJSON.message == "Access Denied" && xhr.responseJSON.exception == "org.springframework.security.authentication.ProviderNotFoundException") {
+				appAction.loginDone(null);
 			} else {
-				this.actions.saveFailed(errorThrown);
+				this.actions.saveFailed(xhr.responseJSON.message);
+				appAction.showError(xhr.responseJSON.message);
 			}
 			appAction.ajaxDone();
 		}.bind(this));

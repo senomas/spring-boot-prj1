@@ -4,11 +4,21 @@ import TableData from '../lib/tableData';
 
 
 import action from '../actions/ProductAction';
+import appAction from '../actions/AppAction';
 
 class ProductStore {
 
 	constructor() {
 		this.bindListeners({
+			loginDone: appAction.loginDone,
+
+			showError: appAction.showError,
+			dismissError: appAction.dismissError,
+
+			activate: action.activate,
+			deactivate: action.deactivate,
+
+			getStart: action.getStart,
 			getResolve: action.getResolve,
 			getFailed: action.getFailed,
 
@@ -22,13 +32,47 @@ class ProductStore {
 			saveFailed: action.saveFailed
 		});
 
+		this.active = false;
+
 		this.list = new TableData(this.loadData);
 		this.list.rowLoading = {name: 'loading...', category: 'loading...'};
 
-		this.item = {};
+		this.itemId = null;
+		this.item = null;
 		this.categories = [];
 		this.filter = {};
 		this.filterRequestId = undefined;
+	}
+
+	showError(error) {
+		this.error = error;
+	}
+
+	dismissError() {
+		this.error = null;
+	}
+
+	activate() {
+		this.active = true;
+		window.setTimeout(function() {
+			action.getCategories();
+			action.getList({
+				page: 0,
+				filter: this.filter,
+				clear: true
+			});
+			if (this.itemId) {
+				action.get(this.itemId);
+			}
+		}.bind(this), 0);
+	}
+
+	deactivate() {
+		this.active = false;
+	}
+
+	getStart(id) {
+		this.itemId = id;
 	}
 
 	getResolve(data) {
@@ -106,6 +150,13 @@ class ProductStore {
 	loadData(page, size) {
 		console.log('loadData '+page+' '+size);
 		action.getList({page: page, size: size, background: true});
+	}
+
+	loginDone(data) {
+		this.login = data;
+		if (this.active && data && data.token) {
+			this.activate();
+		}
 	}
 }
 

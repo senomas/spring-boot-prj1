@@ -10,9 +10,15 @@ class ProductCategoryStore {
 
 	constructor() {
 		this.bindListeners({
+			loginDone: appAction.loginDone,
+
 			showError: appAction.showError,
 			dismissError: appAction.dismissError,
 
+			activate: action.activate,
+			deactivate: action.deactivate,
+
+			getStart: action.getStart,
 			getResolve: action.getResolve,
 			getFailed: action.getFailed,
 
@@ -25,6 +31,8 @@ class ProductCategoryStore {
 			deleteDone: action.deleteDone,
 			deleteFailed: action.deleteFailed
 		});
+
+		this.active = false;
 
 		this.list = new TableData(this.loadData);
 		this.list.rowLoading = {name: 'loading...'};
@@ -45,8 +53,27 @@ class ProductCategoryStore {
 		this.error = null;
 	}
 
-	getStart(page) {
-		console.log('getStart '+page);
+	activate() {
+		this.active = true;
+		window.setTimeout(function() {
+			action.getList({
+				page: 0,
+				filter: this.filter,
+				clear: true
+			});
+			if (this.itemId) {
+				action.get(this.itemId);
+			}
+		}.bind(this), 0);
+	}
+
+	deactivate() {
+		this.active = false;
+	}
+
+	getStart(id) {
+		console.log('getStart '+id);
+		this.itemId = id;
 	}
 
 	getResolve(data) {
@@ -106,6 +133,13 @@ class ProductCategoryStore {
 	loadData(page, size) {
 		console.log('loadData '+page+' '+size);
 		action.getList({page: page, size: size, background: true});
+	}
+
+	loginDone(data) {
+		this.login = data;
+		if (this.active && data && data.token) {
+			this.activate();
+		}
 	}
 }
 

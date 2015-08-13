@@ -1,16 +1,16 @@
 import React from 'react';
 
-import {Panel, Modal, Button, Input} from 'react-bootstrap';  
+import {Panel, Modal, Button, Input} from 'react-bootstrap';
 
 import action from '../actions/AppAction';
 import store from '../stores/AppStore';
 
 export default class Login extends React.Component {
-	
+
 	constructor(props) {
 		super(props);
 		this.state = store.getState();
-		
+
 		this.login = this.login.bind(this);
 		this.updateLogin = this.updateLogin.bind(this);
 		this.updatePassword = this.updatePassword.bind(this);
@@ -19,8 +19,9 @@ export default class Login extends React.Component {
 
 	render() {
 		let login = this.state.loginForm;
+		if (this.state.login && this.state.login.token) return null;
 		return (
-			<Modal show={!(this.state.login && this.state.login.token)} onHide={this.ignored}>
+			<Modal show={true} onHide={this.ignored}>
 				<Modal.Header>
 					<Modal.Title>Login</Modal.Title>
 				</Modal.Header>
@@ -36,7 +37,7 @@ export default class Login extends React.Component {
 			</Modal>
 		);
 	}
-	
+
 	login() {
 		let login = {
 			login: this.state.loginForm.login,
@@ -45,30 +46,30 @@ export default class Login extends React.Component {
 		this.state.loginForm.password = null;
 		action.login(login);
 	}
-	
+
 	updateLogin(e) {
 		var login = this.state.loginForm;
 		login.login = e.target.value;
 		this.setState({loginForm: login});
 	}
-	
+
 	updatePassword(e) {
 		var login = this.state.loginForm;
 		login.password = e.target.value;
 		this.setState({loginForm: login});
 	}
-	
+
 	ignored() {
 	}
-	
+
 	componentDidMount() {
 		store.listen(this.storeUpdate);
 	}
-	
+
 	componentWillUnmount() {
 		store.unlisten(this.storeUpdate);
 	}
-	
+
 	storeUpdate(state) {
 		this.setState(state);
 	}

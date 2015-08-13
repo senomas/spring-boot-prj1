@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,7 @@ public class ProductServiceController {
 	EntityManager entityManager;
 
 	@RequestMapping(value = "/id/{id}", method = { RequestMethod.GET })
+	@PreAuthorize("hasAnyRole('opr', 'admin')")
 	@Transactional
 	public Product get(@PathVariable("id") Long id) {
 		Product obj = repository.findOne(id);
@@ -45,12 +47,14 @@ public class ProductServiceController {
 	}
 
 	@RequestMapping(method = { RequestMethod.GET })
+	@PreAuthorize("hasAnyRole('opr', 'admin')")
 	@Transactional
 	public List<Product> list() {
 		return repository.findAll();
 	}
 
 	@RequestMapping(method = { RequestMethod.POST })
+	@PreAuthorize("hasAnyRole('opr', 'admin')")
 	@Transactional
 	public PageRequestId<ProductSummary> listSummary(@RequestBody ProductPageParam param) {
 		try {
@@ -61,6 +65,7 @@ public class ProductServiceController {
 	}
 
 	@RequestMapping(method = { RequestMethod.PUT })
+	@PreAuthorize("hasRole('admin')")
 	@Transactional
 	public Product save(@RequestBody Product obj) {
 		if (obj.getName().indexOf("xxx") >= 0)
@@ -83,6 +88,7 @@ public class ProductServiceController {
 	}
 
 	@RequestMapping(value = "/id/{id}", method = { RequestMethod.DELETE })
+	@PreAuthorize("hasRole('admin')")
 	@Transactional
 	public Product delete(@PathVariable("id") Long id) {
 		Product obj = repository.findOne(id);

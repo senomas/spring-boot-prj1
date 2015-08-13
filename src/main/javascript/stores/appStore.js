@@ -24,9 +24,21 @@ class AppStore {
 		this.loginForm = {};
 
 		this.ajaxCall = 0;
+
+		this.doListen = this.doListen.bind(this);
+		this.doUnlisten = this.doUnlisten.bind(this);
+	}
+
+	doListen(f) {
+		this.listen(f);
+	}
+
+	doUnlisten(f) {
+		this.unlisten(f);
 	}
 
 	ajaxStart() {
+		// console.log('ajaxStart '+this.ajaxCall);
 		if (this.ajaxCall > 0) this.preventDefault();
 		this.ajaxCall ++;
 	}
@@ -36,6 +48,7 @@ class AppStore {
 			this.ajaxCall --;
 		}
 		if (this.ajaxCall > 0) this.preventDefault();
+		// console.log('ajaxDone '+this.ajaxCall);
 	}
 
 	showError(error) {
@@ -51,6 +64,7 @@ class AppStore {
 		sessionStorage.setItem('login', JSON.stringify(data));
 		if (data && data.token) {
 			sessionStorage.setItem('token', data.token);
+			// document.location.reload();
 		} else {
 			sessionStorage.setItem('token', null);
 		}

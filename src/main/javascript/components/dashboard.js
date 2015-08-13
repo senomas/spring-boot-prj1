@@ -10,8 +10,9 @@ export default class Dashboard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = store.getState();
-		
+
 		this.logout = this.logout.bind(this);
+		this.storeUpdate = this.storeUpdate.bind(this);
 	}
 
 	render() {
@@ -23,9 +24,20 @@ export default class Dashboard extends React.Component {
 			</Jumbotron>
 		);
 	}
-	
+
 	logout() {
 		action.logout();
 	}
-	
+
+	componentDidMount() {
+		store.listen(this.storeUpdate);
+	}
+
+	componentWillUnmount() {
+		store.unlisten(this.storeUpdate);
+	}
+
+	storeUpdate(state) {
+		this.setState(state);
+	}	
 }

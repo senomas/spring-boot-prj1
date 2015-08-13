@@ -10,7 +10,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel', query: {stage: 0}},
       { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
       { test: /\.(png|jpg|eot|ttf|svg|woff|woff2)$/, loader: 'url-loader?limit=8192' },
 	]
