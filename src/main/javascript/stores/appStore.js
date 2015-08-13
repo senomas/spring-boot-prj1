@@ -10,19 +10,19 @@ class AppStore {
 		this.bindListeners({
 			ajaxStart: action.ajaxStart,
 			ajaxDone: action.ajaxDone,
-			
+
 			showError: action.showError,
 			dismissError: action.dismissError,
-			
+
 			loginDone: action.loginDone,
 			loginFailed: action.loginFailed
 		});
-		
+
 		let uv = sessionStorage.getItem('login');
 		this.login = uv ? JSON.parse(uv) : null;
-		
+
 		this.loginForm = {};
-		
+
 		this.ajaxCall = 0;
 	}
 
@@ -30,22 +30,22 @@ class AppStore {
 		if (this.ajaxCall > 0) this.preventDefault();
 		this.ajaxCall ++;
 	}
-	
+
 	ajaxDone() {
 		if (this.ajaxCall > 0) {
 			this.ajaxCall --;
 		}
 		if (this.ajaxCall > 0) this.preventDefault();
 	}
-	
+
 	showError(error) {
 		this.error = error;
 	}
-	
+
 	dismissError() {
 		this.error = null;
 	}
-	
+
 	loginDone(data) {
 		this.login = data;
 		sessionStorage.setItem('login', JSON.stringify(data));
@@ -56,7 +56,7 @@ class AppStore {
 		}
 		console.log('LOGIN DONE '+JSON.stringify(data));
 	}
-	
+
 	loginFailed(msg) {
 		console.log('LOGIN FAILED '+msg);
 	}

@@ -47,6 +47,10 @@ public class ProductCategoryServiceController {
 	@PreAuthorize("hasAnyRole('opr', 'admin')")
 	@Transactional
 	public Page<ProductCategory> list(@RequestBody ProductCategoryPageParam param) {
+		try {
+			Thread.sleep(2000);
+		} catch (Exception e) {
+		}
 		return repository.findFilter(param);
 	}
 

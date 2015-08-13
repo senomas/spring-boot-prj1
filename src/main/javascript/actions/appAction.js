@@ -3,18 +3,21 @@ import alt from '../lib/altInstance';
 import sha256 from 'sha256';
 
 class AppAction {
-	
+
 	constructor() {
 		this.generateActions('showError', 'dismissError');
-		
 		this.generateActions('ajaxStart', 'ajaxDone');
 		this.generateActions('loginDone', 'loginFailed');
 	}
-	
+
+	ajaxDoStart() {
+		window.setTimeout(this.actions.ajaxStart, 0);
+	}
+
 	logout() {
 		this.actions.loginDone(null);
 	}
-	
+
 	login(login) {
 		console.log('LOGIN '+JSON.stringify(login));
 		this.actions.ajaxStart();

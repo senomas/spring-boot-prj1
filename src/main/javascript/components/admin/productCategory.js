@@ -15,13 +15,13 @@ export default class ProductCategory extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = store.getState();
-		
+
 		this.rowClick = this.rowClick.bind(this);
 		this.dismissError = this.dismissError.bind(this);
 		this.getRow = this.getRow.bind(this);
 		this.storeUpdate = this.storeUpdate.bind(this);
 	}
-	
+
 	render() {
 		return (
 			<Panel header='Product Category'>
@@ -33,7 +33,7 @@ export default class ProductCategory extends React.Component {
 					width={938}
 					height={500}
 					headerHeight={50}>
-				    
+
 					<Column
 						label="#"
 						width={50}
@@ -41,7 +41,7 @@ export default class ProductCategory extends React.Component {
 						align='right'
 						fixed={true}
 						dataKey="row" />
-		
+
 					<Column
 						label="Name"
 						fixed={true}
@@ -52,42 +52,41 @@ export default class ProductCategory extends React.Component {
 				<div className="cmd-bar text-center">
 					<Button onClick={this.createNew} bsStyle='primary'>Create New Item</Button>
 				</div>
-				
+
 				<RouteHandler/>
 			</Panel>
 		);
 	}
-	
+
 	rowClick(e) {
 		var row = $(e.target).closest('.fixedDataTableCellGroupLayout_cellGroupWrapper').find('.row_NUM').text();
 		console.log("SELECTED ROW "+row+"  "+JSON.stringify(this.getRow(row-1)));
 		window.location.assign('/#/admin/productCategory/id/'+this.getRow(row-1).id);
 	}
-	
+
 	dismissError() {
 		this.setState({error: null});
 	}
-	
+
 	createNew() {
 		window.location.assign('/#/admin/productCategory/new');
 	}
-	
+
 	getRow(row) {
 		let data = this.state.list.content[row];
 		data.row = row + 1;
 		return data;
 	}
-	
+
 	componentDidMount() {
 		store.listen(this.storeUpdate);
-		console.log('didMount '+JSON.stringify(this.state.login));
 		action.getList(0);
 	}
-	
+
 	componentWillUnmount() {
 		store.unlisten(this.storeUpdate);
 	}
-	
+
 	storeUpdate(state) {
 		this.setState(state);
 	}
