@@ -3,8 +3,8 @@ require('bootstrap');
 require('../../../node_modules/bootstrap/dist/css/bootstrap.css');
 require("../css/app.css");
 
-import React from 'react';  
-import Router from 'react-router';  
+import React from 'react';
+import Router from 'react-router';
 import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 
 import Login from './components/login';
@@ -17,7 +17,7 @@ import ProductEdit from './components/admin/productEdit';
 import PopupError from './components/popupError';
 
 export default class App extends React.Component {
-	
+
 	render() {
 		return (
 			<div className="app-container container">
@@ -30,7 +30,7 @@ export default class App extends React.Component {
 	}
 }
 
-let routes = (  
+let routes = (
   <Route name="app" path="/" handler={App}>
     <Route name="adminProductCategory" path="/admin/productCategory" handler={ProductCategory}>
     	<Route name="adminProductCategoryEdit" path="id/:id" handler={ProductCategoryEdit}/>
@@ -43,6 +43,6 @@ let routes = (
   </Route>
 );
 
-Router.run(routes, function (Handler) {  
+Router.run(routes, function (Handler) {
   React.render(<Handler/>, document.getElementById('app'));
 });
