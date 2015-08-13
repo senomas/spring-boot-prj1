@@ -11,6 +11,9 @@ class AppStore {
 			ajaxStart: action.ajaxStart,
 			ajaxDone: action.ajaxDone,
 			
+			showError: action.showError,
+			dismissError: action.dismissError,
+			
 			loginDone: action.loginDone,
 			loginFailed: action.loginFailed
 		});
@@ -33,6 +36,14 @@ class AppStore {
 			this.ajaxCall --;
 		}
 		if (this.ajaxCall > 0) this.preventDefault();
+	}
+	
+	showError(error) {
+		this.error = error;
+	}
+	
+	dismissError() {
+		this.error = null;
 	}
 	
 	loginDone(data) {

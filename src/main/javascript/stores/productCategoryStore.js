@@ -7,6 +7,9 @@ class ProductCategoryStore {
 
 	constructor() {
 		this.bindListeners({
+			showError: appAction.showError,
+			dismissError: appAction.dismissError,
+			
 			getStart: action.getStart,
 			getResolve: action.getResolve,
 			getFailed: action.getFailed,
@@ -31,6 +34,14 @@ class ProductCategoryStore {
 		
 		let uv = sessionStorage.getItem('login');
 		this.login = uv ? JSON.parse(uv) : null;
+	}
+	
+	showError(error) {
+		this.error = error;
+	}
+	
+	dismissError() {
+		this.error = null;
 	}
 	
 	getStart(page) {

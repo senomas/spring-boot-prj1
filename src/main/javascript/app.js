@@ -14,6 +14,7 @@ import ProductCategory from './components/admin/productCategory';
 import ProductCategoryEdit from './components/admin/productCategoryEdit';
 import Product from './components/admin/product';
 import ProductEdit from './components/admin/productEdit';
+import PopupError from './components/popupError';
 
 export default class App extends React.Component {
 	
@@ -21,6 +22,7 @@ export default class App extends React.Component {
 		return (
 			<div className="app-container container">
 				<Login/>
+				<PopupError/>
 				<AppHeader/>
 				<RouteHandler/>
 			</div>

@@ -24,10 +24,9 @@ class ProductCategoryAction {
 		}.bind(this)).fail(function (xhr) {
 			if (xhr.responseJSON.status == 403 && xhr.responseJSON.message == "Access Denied" && xhr.responseJSON.exception == "org.springframework.security.authentication.ProviderNotFoundException") {
 				appAction.loginDone(null);
-			} else if (xhr.responseJSON.message) {
-				this.actions.getFailed(xhr.responseJSON.message);
 			} else {
-				this.actions.getFailed(errorThrown);
+				this.actions.getFailed(xhr.responseJSON.message);
+				appAction.showError(xhr.responseJSON.message);
 			}
 		}.bind(this));
 	}
@@ -51,10 +50,9 @@ class ProductCategoryAction {
 			console.log('ERROR '+JSON.stringify(xhr));
 			if (xhr.responseJSON.status == 403 && xhr.responseJSON.message == "Access Denied" && xhr.responseJSON.exception == "org.springframework.security.authentication.ProviderNotFoundException") {
 				appAction.loginDone(null);
-			} else if (xhr.responseJSON.message) {
-				this.actions.getListFailed(xhr.responseJSON.message);
 			} else {
-				this.actions.getListFailed(errorThrown);
+				this.actions.getListFailed(xhr.responseJSON.message);
+				appAction.showError(xhr.responseJSON.message);
 			}
 		}.bind(this));
 	}
@@ -79,10 +77,9 @@ class ProductCategoryAction {
 			console.log('ERROR '+JSON.stringify(xhr));
 			if (xhr.responseJSON.status == 403 && xhr.responseJSON.message == "Access Denied" && xhr.responseJSON.exception == "org.springframework.security.authentication.ProviderNotFoundException") {
 				appAction.loginDone(null);
-			} else if (xhr.responseJSON.message) {
-				this.actions.saveFailed(xhr.responseJSON.message);
 			} else {
-				this.actions.saveFailed(errorThrown);
+				this.actions.saveFailed(xhr.responseJSON.message);
+				appAction.showError(xhr.responseJSON.message);
 			}
 		}.bind(this));
 	}
@@ -102,10 +99,9 @@ class ProductCategoryAction {
 			console.log('ERROR '+JSON.stringify(xhr));
 			if (xhr.responseJSON.status == 403 && xhr.responseJSON.message == "Access Denied" && xhr.responseJSON.exception == "org.springframework.security.authentication.ProviderNotFoundException") {
 				appAction.loginDone(null);
-			} else if (xhr.responseJSON.message) {
-				this.actions.deleteFailed(xhr.responseJSON.message);
 			} else {
-				this.actions.deleteFailed(errorThrown);
+				this.actions.deleteFailed(xhr.responseJSON.message);
+				appAction.showError(xhr.responseJSON.message);
 			}
 		}.bind(this));
 	}

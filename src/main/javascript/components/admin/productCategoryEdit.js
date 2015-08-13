@@ -27,7 +27,7 @@ export default class ProductCategoryEdit extends React.Component {
 		if (!this.state.login) return null;
 		var item = this.state.item;
 		return (
-			<Modal show={true} onHide={this.ignored}>
+			<Modal show={!this.state.error} onHide={this.ignored}>
 				<Modal.Header>
 					<Modal.Title>{this.props.params.id ? 'Edit' : 'Create'} Product Category</Modal.Title>
 				</Modal.Header>
@@ -83,7 +83,7 @@ export default class ProductCategoryEdit extends React.Component {
 		if (this.props.params.id) {
 			action.get(this.props.params.id);
 		} else {
-			this.setState({item: {}});
+			action.getResolve({});
 		}
 	}
 	

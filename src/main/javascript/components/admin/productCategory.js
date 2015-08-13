@@ -10,7 +10,6 @@ import {Table, Column} from 'fixed-data-table';
 import action from '../../actions/ProductCategoryAction';
 import store from '../../stores/ProductCategoryStore';
 
-
 export default class ProductCategory extends React.Component {
 
 	constructor(props) {
@@ -18,6 +17,7 @@ export default class ProductCategory extends React.Component {
 		this.state = store.getState();
 		
 		this.rowClick = this.rowClick.bind(this);
+		this.dismissError = this.dismissError.bind(this);
 		this.getRow = this.getRow.bind(this);
 		this.storeUpdate = this.storeUpdate.bind(this);
 	}
@@ -62,6 +62,10 @@ export default class ProductCategory extends React.Component {
 		var row = $(e.target).closest('.fixedDataTableCellGroupLayout_cellGroupWrapper').find('.row_NUM').text();
 		console.log("SELECTED ROW "+row+"  "+JSON.stringify(this.getRow(row-1)));
 		window.location.assign('/#/admin/productCategory/id/'+this.getRow(row-1).id);
+	}
+	
+	dismissError() {
+		this.setState({error: null});
 	}
 	
 	createNew() {

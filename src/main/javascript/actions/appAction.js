@@ -5,6 +5,8 @@ import sha256 from 'sha256';
 class AppAction {
 	
 	constructor() {
+		this.generateActions('showError', 'dismissError');
+		
 		this.generateActions('ajaxStart', 'ajaxDone');
 		this.generateActions('loginDone', 'loginFailed');
 	}
