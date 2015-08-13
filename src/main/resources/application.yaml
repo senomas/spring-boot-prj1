@@ -7,6 +7,11 @@ spring:
       url: jdbc:mysql://${DB_SERVER:docker:8306}/training?autoReconnect=true
       username: ${DB_USER:training}
       password: ${DB_PASSWORD:dodol123}
+      timeBetweenEvictionRunsMillis: 30000
+      minEvictableIdleTimeMillis: 60000
+      testOnBorrow: true
+      validationInterval: 30000
+      validationQuery: "select 1"
 
 com.senomas:
    http-logger:
