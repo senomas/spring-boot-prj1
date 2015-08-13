@@ -18,7 +18,6 @@ export default class ProductCategory extends React.Component {
 
 		this.rowClick = this.rowClick.bind(this);
 		this.dismissError = this.dismissError.bind(this);
-		this.getRow = this.getRow.bind(this);
 		this.storeUpdate = this.storeUpdate.bind(this);
 	}
 
@@ -27,8 +26,8 @@ export default class ProductCategory extends React.Component {
 			<Panel header='Product Category'>
 				<Table
 					rowHeight={50}
-					rowGetter={this.getRow}
-					rowsCount={this.state.list.totalElements}
+					rowGetter={this.state.list.getRow}
+					rowsCount={this.state.list.total}
 					onRowClick={this.rowClick}
 					width={938}
 					height={500}
@@ -60,8 +59,8 @@ export default class ProductCategory extends React.Component {
 
 	rowClick(e) {
 		var row = $(e.target).closest('.fixedDataTableCellGroupLayout_cellGroupWrapper').find('.row_NUM').text();
-		console.log("SELECTED ROW "+row+"  "+JSON.stringify(this.getRow(row-1)));
-		window.location.assign('/#/admin/productCategory/id/'+this.getRow(row-1).id);
+		// console.log("SELECTED ROW "+row+"  "+JSON.stringify(this.state.list.getRow(row-1)));
+		window.location.assign('/#/admin/productCategory/id/'+this.state.list.getRow(row-1).id);
 	}
 
 	dismissError() {
@@ -72,15 +71,13 @@ export default class ProductCategory extends React.Component {
 		window.location.assign('/#/admin/productCategory/new');
 	}
 
-	getRow(row) {
-		let data = this.state.list.content[row];
-		data.row = row + 1;
-		return data;
-	}
-
 	componentDidMount() {
 		store.listen(this.storeUpdate);
-		action.getList(0);
+		action.getList({
+			page: 0,
+			filter: this.state.filter,
+			clear: true
+		});
 	}
 
 	componentWillUnmount() {

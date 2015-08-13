@@ -29,8 +29,6 @@ class ProductStore {
 		this.categories = [];
 		this.filter = {};
 		this.filterRequestId = undefined;
-
-		this.ajaxCall = 0;
 	}
 
 	getResolve(data) {

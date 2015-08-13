@@ -16,9 +16,9 @@ class ProductCategoryAction {
 		appAction.ajaxDoStart();
 		jQuery.ajax({
 			url: '/rs/productCategory/id/'+id,
-		    beforeSend: function (xhr) {
-		        xhr.setRequestHeader('Authorization', 'Bearer '+sessionStorage.getItem('token'));
-		    }
+	    beforeSend: function (xhr) {
+				xhr.setRequestHeader('Authorization', 'Bearer '+sessionStorage.getItem('token'));
+		  }
 		}).done(function (data) {
 			this.actions.getResolve(data);
 			appAction.ajaxDone();
@@ -33,31 +33,31 @@ class ProductCategoryAction {
 		}.bind(this));
 	}
 
-	getList(page) {
-		appAction.ajaxDoStart();
+	getList(param) {
+		if (!param.background) appAction.ajaxDoStart();
 		jQuery.ajax({
 			url: '/rs/productCategory',
 			type: 'POST',
 			contentType: "application/json; charset=utf-8",
-			data: JSON.stringify({
-				page: page,
-				size: 1000
-			}),
-		    beforeSend: function (xhr) {
-		        xhr.setRequestHeader('Authorization', 'Bearer '+sessionStorage.getItem('token'));
-		    }
+			data: JSON.stringify(param),
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader('Authorization', 'Bearer '+sessionStorage.getItem('token'));
+			}
 		}).done(function (data) {
+			if (param.clear) {
+				this.actions.getListResolve({totalElements: 0});
+			}
 			this.actions.getListResolve(data);
-			appAction.ajaxDone();
+			if (!param.background) appAction.ajaxDone();
 		}.bind(this)).fail(function (xhr) {
-			console.log('ERROR '+JSON.stringify(xhr));
+			console.log('ERROR getList '+JSON.stringify(xhr));
 			if (xhr.responseJSON.status == 403 && xhr.responseJSON.message == "Access Denied" && xhr.responseJSON.exception == "org.springframework.security.authentication.ProviderNotFoundException") {
 				appAction.loginDone(null);
 			} else {
 				this.actions.getListFailed(xhr.responseJSON.message);
 				appAction.showError(xhr.responseJSON.message);
 			}
-			appAction.ajaxDone();
+			if (!param.background) appAction.ajaxDone();
 		}.bind(this));
 	}
 

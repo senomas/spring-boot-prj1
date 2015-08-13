@@ -1,5 +1,8 @@
 import alt from '../lib/altInstance';
 
+import TableData from '../lib/tableData';
+
+
 import action from '../actions/ProductCategoryAction';
 import appAction from '../actions/AppAction';
 
@@ -20,13 +23,15 @@ class ProductCategoryStore {
 			saveFailed: action.saveFailed,
 
 			deleteDone: action.deleteDone,
-			deleteFailed: action.deleteFailed,
-
-			loginDone: appAction.loginDone
+			deleteFailed: action.deleteFailed
 		});
 
-		this.list = {totalElements: 0};
+		this.list = new TableData(this.loadData);
+		this.list.rowLoading = {name: 'loading...'};
+
 		this.item = {};
+		this.filter = {};
+		this.filterRequestId = undefined;
 
 		let uv = sessionStorage.getItem('login');
 		this.login = uv ? JSON.parse(uv) : null;
@@ -60,7 +65,7 @@ class ProductCategoryStore {
 
 	getListResolve(data) {
 		console.log('getListResolve '+JSON.stringify(data));
-		this.setState({list: data});
+		this.list.update(data);
 	}
 
 	getListFailed(error) {
@@ -98,14 +103,9 @@ class ProductCategoryStore {
 		console.log('deleteFailed '+JSON.stringify(error));
 	}
 
-	loginDone(data) {
-		this.login = data;
-		console.log('PRODUCT CATEGORY LOGIN DONE '+JSON.stringify(data));
-		if (this.login && this.login.token) {
-			console.log('window reload');
-			document.location.reload();
-			this.preventDefault();
-		}
+	loadData(page, size) {
+		console.log('loadData '+page+' '+size);
+		action.getList({page: page, size: size, background: true});
 	}
 }
 
