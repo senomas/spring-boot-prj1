@@ -97,7 +97,7 @@ class ProductCategoryStore {
 
 	getListFailed(error) {
 		console.log('getListFailed '+JSON.stringify(error));
-		this.setState({list: {totalElements: 0}});
+		this.list.clear();
 	}
 
 	saveStart(data) {
