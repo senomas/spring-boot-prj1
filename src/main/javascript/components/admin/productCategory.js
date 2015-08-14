@@ -1,6 +1,5 @@
 require('../../../../../node_modules/fixed-data-table/dist/fixed-data-table.css');
 
-
 import React from 'react';
 import { RouteHandler } from 'react-router';
 

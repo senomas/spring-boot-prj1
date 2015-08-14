@@ -1,7 +1,5 @@
 import alt from '../lib/altInstance';
-
 import TableData from '../lib/tableData';
-
 
 import action from '../actions/ProductCategoryAction';
 import appAction from '../actions/AppAction';

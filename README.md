@@ -14,6 +14,11 @@ grant all privileges on training.* to 'training'@'%';
 ====
 TOOLS
 
+Download atom (text editor) https://atom.io/
+  - Install packages
+    - atom-react (enable for all javascript in option)
+    - jshint (enable support JSX in option)
+
 npm init
 
 npm install -g npm-check-updates

@@ -1,5 +1,5 @@
 export default class TableData {
-	
+
 	constructor(loadData, pageSize = 100, pageBuffer = 1) {
 		this.pageSize = pageSize;
 		this.pageBuffer = pageBuffer;
@@ -7,10 +7,10 @@ export default class TableData {
 		this.total = 0;
 		this.rowLoading = {};
 		this.content = new Map();
-		
+
 		this.requested = undefined;
 		this.loadData = loadData;
-		
+
 		this.getRow = this.getRow.bind(this);
 		this.update = this.update.bind(this);
 		this.clear = this.clear.bind(this);
@@ -30,10 +30,10 @@ export default class TableData {
 		r.row = row + 1;
 		return r;
 	}
-	
+
 	update(data) {
 		this.total = data.totalElements;
-		if (data.totalElements == 0) {
+		if (data.totalElements === 0) {
 			this.offset = 0;
 			this.content.clear();
 			return;
@@ -59,7 +59,15 @@ export default class TableData {
 			}
 		}
 	}
-	
+
+	updateRow(data) {
+		this.content.forEach((v, k, list) => {
+			if (data.id == v.id) {
+				list[k] = data;
+			}
+		});
+	}
+
 	clear() {
 		this.offset = 0;
 		this.total = 0;

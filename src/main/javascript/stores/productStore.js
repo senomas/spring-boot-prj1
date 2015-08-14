@@ -42,6 +42,9 @@ class ProductStore {
 		this.categories = [];
 		this.filter = {};
 		this.filterRequestId = undefined;
+
+		let uv = sessionStorage.getItem('login');
+		this.login = uv ? JSON.parse(uv) : null;
 	}
 
 	showError(error) {
@@ -61,7 +64,7 @@ class ProductStore {
 				filter: this.filter,
 				clear: true
 			});
-			if (this.itemId) {
+			if (this.itemId && !(this.item && this.item.id == this.itemId)) {
 				action.get(this.itemId);
 			}
 		}.bind(this), 0);
@@ -140,7 +143,6 @@ class ProductStore {
 			}
 		});
 		window.location.assign('/#/admin/product');
-		this.preventDefault();
 	}
 
 	saveFailed(error) {

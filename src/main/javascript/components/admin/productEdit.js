@@ -27,6 +27,7 @@ export default class ProductEdit extends React.Component {
 	}
 
 	render() {
+		if (!this.state.login) return null;
 		var item = this.state.item;
 		if (!item) return null;
 		return (

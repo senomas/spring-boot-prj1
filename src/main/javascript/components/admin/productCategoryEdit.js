@@ -4,7 +4,7 @@ require('../../../../../node_modules/fixed-data-table/dist/fixed-data-table.css'
 import React from 'react';
 import { RouteHandler } from 'react-router';
 
-import {Panel, Modal, Button, Input} from 'react-bootstrap';  
+import {Panel, Modal, Button, Input} from 'react-bootstrap';
 import {Table, Column} from 'fixed-data-table';
 
 import action from '../../actions/ProductCategoryAction';
@@ -22,7 +22,7 @@ export default class ProductCategoryEdit extends React.Component {
 		this.delete = this.delete.bind(this);
 		this.storeUpdate = this.storeUpdate.bind(this);
 	}
-	
+
 	render() {
 		if (!this.state.login) return null;
 		var item = this.state.item;
@@ -56,28 +56,28 @@ export default class ProductCategoryEdit extends React.Component {
 			</Modal>
 		);
 	}
-	
+
 	updateName(e) {
 		var item = this.state.item;
 		item.name = e.target.value;
 		this.setState({item: item});
 	}
-	
+
 	ignored() {
 	}
-	
+
 	save() {
 		action.save(this.state.item);
 	}
-	
+
 	delete() {
 		action.delete(this.state.item.id);
 	}
-	
+
 	close() {
 		window.location.assign('/#/admin/productCategory');
 	}
-	
+
 	componentDidMount() {
 		store.listen(this.storeUpdate);
 		if (this.props.params.id) {
@@ -86,11 +86,11 @@ export default class ProductCategoryEdit extends React.Component {
 			action.getResolve({});
 		}
 	}
-	
+
 	componentWillUnmount() {
 		store.unlisten(this.storeUpdate);
 	}
-	
+
 	storeUpdate(state) {
 		this.setState(state);
 	}
