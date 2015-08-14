@@ -60,9 +60,9 @@ export default class TableData {
 		}
 	}
 
-	updateRow(data) {
+	updateRow(data, getKey) {
 		this.content.forEach((v, k, list) => {
-			if (data.id == v.id) {
+			if (getey(data) == getKey(v)) {
 				list[k] = data;
 			}
 		});

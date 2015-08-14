@@ -19,6 +19,21 @@ Download atom (text editor) https://atom.io/
     - atom-react (enable for all javascript in option)
     - jshint (enable support JSX in option)
 
+====
+Run
+
+npm install
+
+Run project
+mvn clean spring-boot:run -DDB_SERVER=dbserver:3306
+
+Run watchify
+npm start
+
+
+====
+For documentation only no need to run
+
 npm init
 
 npm install -g npm-check-updates
