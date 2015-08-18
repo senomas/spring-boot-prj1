@@ -105,6 +105,7 @@ class ProductCategoryStore {
 
 	saveDone(data) {
 		console.log('saveDone '+JSON.stringify(data));
+		this.activate();
 		window.location.assign('/#/admin/productCategory');
 		this.preventDefault();
 	}

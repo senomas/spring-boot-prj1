@@ -133,15 +133,7 @@ class ProductStore {
 
 	saveDone(data) {
 		console.log('saveDone '+JSON.stringify(data));
-		this.list.content.forEach((v, k, list) => {
-			if (data.id == v.id) {
-				list[k] = {
-					id: data.id,
-					category: data.category.name,
-					name: data.name
-				};
-			}
-		});
+		this.activate();
 		window.location.assign('/#/admin/product');
 	}
 
