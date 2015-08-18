@@ -4,7 +4,7 @@ spring:
          ddl-auto: update
 
    datasource:
-      url: jdbc:mysql://${DB_SERVER:docker:8306}/training?autoReconnect=true
+      url: jdbc:mysql://${DB_SERVER:docker:8306}/${DB_NAME:training}?autoReconnect=true
       username: ${DB_USER:training}
       password: ${DB_PASSWORD:dodol123}
       timeBetweenEvictionRunsMillis: 30000
