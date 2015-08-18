@@ -77,7 +77,6 @@ class ProductCategoryAction {
 		    }
 		}).done(function (data) {
 			this.actions.saveDone(data);
-			this.actions.getList(0);
 			appAction.ajaxDone();
 		}.bind(this)).fail(function (xhr) {
 			console.log('ERROR '+JSON.stringify(xhr));
